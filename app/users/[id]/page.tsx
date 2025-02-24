@@ -2,7 +2,11 @@
 // each user has their own slug /[id] (/1, /2, /3, ...) and is displayed using this file
 // try to leverage the component library from antd by utilizing "Card" to display the individual user
 // import { Card } from "antd"; // similar to /app/users/page.tsx
-const UserPage = () => {
-    return <div>User Profile Page</div>;
-};
-
+export default function UserPage() {
+    return (
+        <div>
+            <h1>User Profile</h1>
+            <p>This is the user profile page.</p>
+        </div>
+    );
+}
