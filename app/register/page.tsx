@@ -5,8 +5,7 @@ import { useApi } from "@/hooks/useApi"; // hook starts with "use
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { User } from "@/types/user"; // imports the defined structure of a User object
 import { Button, Form, Input } from "antd";
-import {register} from "node:module";
-import {log} from "node:util"; // imports UI components from Ant Design Library
+
 
 
 // Optionally, you can import a CSS module or file for additional styling:

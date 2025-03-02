@@ -9,7 +9,6 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { User } from "@/types/user";
 import { Button, Card, Table } from "antd";
 import type { TableProps } from "antd";
-import {bool} from "sharp"; // antd component library allows imports of types
 // Optionally, you can import a CSS module or file for additional styling:
 // import "@/styles/views/Dashboard.scss";
 

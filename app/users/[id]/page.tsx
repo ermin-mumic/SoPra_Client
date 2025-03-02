@@ -9,7 +9,7 @@ import { useRouter, useParams } from "next/navigation"; // useParams gets parame
 import { useApi } from "@/hooks/useApi";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { User } from "@/types/user";
-import { Button, Card, Table } from "antd";
+import { Button, Card } from "antd";
 
 const UserProfile: React.FC = () => { //defines userprofile component
     const router = useRouter();
@@ -50,7 +50,7 @@ const UserProfile: React.FC = () => { //defines userprofile component
         };
 
         fetchUser();
-    }, [apiService, token]); // to ensure UseEffect reruns once token is fetched
+    }, [apiService, token, id]); // to ensure UseEffect reruns once token is fetched
 
     return (
         <div className="card-container">
