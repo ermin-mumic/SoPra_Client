@@ -16,7 +16,7 @@ interface FormFieldProps { //defines structure of a form field
 const Login: React.FC = () => { // defines a React component Login that returns JSX(HTML)
   const router = useRouter(); // for navigation (redirecting user etc.)
   const apiService = useApi(); // for HTTP requests to server
-  const [form] = Form.useForm(); // extracting first element and assigning to variabel form (list destructuring)
+  const [form] = Form.useForm(); // extracting first element and assigning to variable form (list destructuring)
   // useLocalStorage hook example use
   // The hook returns an object with the value and two functions (set, clear)
   // Simply choose what you need from the hook:
@@ -30,15 +30,14 @@ const Login: React.FC = () => { // defines a React component Login that returns 
   const handleLogin = async (values: FormFieldProps) => { // awaiting function executed when Login submitted, takes in values in form of FormFields
     try {
       // Call the API service and let it handle JSON serialization and error handling
-      const response = await apiService.post<User>("/users", { values }); // awaits the response of the POST to server with expected form of a User. It sends {values} (POST) to endpoint "/users"
+      const response = await apiService.post<User>("/login",  values ); // awaits the response of the POST to server with expected form of a User. It sends {values} (POST) to endpoint "/users"
 
       // Use the useLocalStorage hook that returned a setter function (setToken in line 41) to store the token if available
-      if (response.token) {
+      if (response.token != null) {
         setToken(response.token);
+        // Navigate to the user overview
+        router.push("/users/dashboard");
       }
-
-      // Navigate to the user overview
-      router.push("/users/dashboard");
     } catch (error) {
       if (error instanceof Error) {
         alert(`Something went wrong during the login:\n${error.message}`);
@@ -79,13 +78,19 @@ const Login: React.FC = () => { // defines a React component Login that returns 
             Login
           </Button>
         </Form.Item>
+        <Form.Item>
+          <Button
+              onClick = {() => router.push("/register")}>
+            Register
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button
+              onClick = {() => router.push("/")}>
+            Landing Page
+          </Button>
+        </Form.Item>
       </Form>
-      <div>
-        <span
-            onClick = {() => router.push("/register")}>
-          Register
-        </span>
-      </div>
     </div>
   );
 };

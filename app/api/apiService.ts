@@ -23,8 +23,8 @@ export class ApiService {
    * @throws ApplicationError if res.ok is false.
    */
   private async processResponse<T>(
-    res: Response,
-    errorMessage: string,
+      res: Response,
+      errorMessage: string,
   ): Promise<T> {
     if (!res.ok) {
       let errorDetail = res.statusText;
@@ -40,17 +40,19 @@ export class ApiService {
       }
       const detailedMessage = `${errorMessage} (${res.status}: ${errorDetail})`;
       const error: ApplicationError = new Error(
-        detailedMessage,
+          detailedMessage,
       ) as ApplicationError;
       error.info = JSON.stringify(
-        { status: res.status, statusText: res.statusText },
-        null,
-        2,
+          { status: res.status, statusText: res.statusText },
+          null,
+          2,
       );
       error.status = res.status;
       throw error;
     }
-    return res.json() as Promise<T>;
+    return res.headers.get("Content-Type")?.includes("application/json")
+        ? res.json() as Promise<T>
+        : Promise.resolve(res as T);
   }
 
   /**
@@ -58,15 +60,19 @@ export class ApiService {
    * @param endpoint - The API endpoint (e.g. "/users").
    * @returns JSON data of type T.
    */
-  public async get<T>(endpoint: string): Promise<T> {
+  public async get<T>(endpoint: string, customHeaders?: { [key: string]: string} ): Promise<T> { // adding an additional optional header that can be passed for the token
     const url = `${this.baseURL}${endpoint}`;
+    const headers = { // merge custom headers with default
+      ...this.defaultHeaders,
+      ...customHeaders
+    };
     const res = await fetch(url, {
       method: "GET",
-      headers: this.defaultHeaders,
+      headers: headers,
     });
     return this.processResponse<T>(
-      res,
-      "An error occurred while fetching the data.\n",
+        res,
+        "An error occurred while fetching the data.\n",
     );
   }
 
@@ -84,8 +90,8 @@ export class ApiService {
       body: JSON.stringify(data),
     });
     return this.processResponse<T>(
-      res,
-      "An error occurred while posting the data.\n",
+        res,
+        "An error occurred while posting the data.\n",
     );
   }
 
@@ -103,8 +109,8 @@ export class ApiService {
       body: JSON.stringify(data),
     });
     return this.processResponse<T>(
-      res,
-      "An error occurred while updating the data.\n",
+        res,
+        "An error occurred while updating the data.\n",
     );
   }
 
@@ -120,8 +126,8 @@ export class ApiService {
       headers: this.defaultHeaders,
     });
     return this.processResponse<T>(
-      res,
-      "An error occurred while deleting the data.\n",
+        res,
+        "An error occurred while deleting the data.\n",
     );
   }
 }
