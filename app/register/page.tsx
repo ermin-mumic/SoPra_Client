@@ -111,12 +111,6 @@ const Register: React.FC = () => { // defines a React component Register that re
                 >
                     <Input placeholder="Enter password" />
                 </Form.Item>
-                <Form.Item
-                    name="birthday"
-                    label="Birthday"
-                >
-                    <Input placeholder="Enter birthday (optional)" />
-                </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="register-button">
                         Register
