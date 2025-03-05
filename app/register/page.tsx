@@ -56,6 +56,7 @@ const Register: React.FC = () => { // defines a React component Register that re
     const handleRegister = async (values: FormFieldProps) => {
         try {
             // Call the API service and let it handle JSON serialization and error handling
+            console.log(values);
             const response = await apiService.post<User>("/users", values);
 
             if (response.username != null) {

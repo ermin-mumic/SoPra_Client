@@ -56,6 +56,10 @@ const Dashboard: React.FC = () => { //defines dashboard component
   };
 
   useEffect(() => { //called when first rendered or when apiService changes
+    if (!token) { // needed as at first token is empty and the UseEffect is executed directly and afterwards the token is fetched from local Storage
+      console.log("Token is not available yet.");
+      return;}
+
     const fetchUsers = async () => { //makes a Get request to users which then gets a response in form of a list of UsersGetDTO objects
       try {
         // apiService.get<User[]> returns the parsed JSON object directly,
@@ -73,7 +77,7 @@ const Dashboard: React.FC = () => { //defines dashboard component
     };
 
     fetchUsers();
-  }, [apiService]); // dependency apiService does not re-trigger the useEffect on every render because the hook uses memoization (check useApi.tsx in the hooks).
+  }, [apiService, token]); // dependency apiService does not re-trigger the useEffect on every render because the hook uses memoization (check useApi.tsx in the hooks).
   // if the dependency array is left empty, the useEffect will trigger exactly once
   // if the dependency array is left away, the useEffect will run on every state change. Since we do a state change to users in the useEffect, this results in an infinite loop.
   // read more here: https://react.dev/reference/react/useEffect#specifying-reactive-dependencies

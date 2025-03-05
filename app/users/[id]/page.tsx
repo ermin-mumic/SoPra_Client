@@ -16,6 +16,7 @@ const UserProfile: React.FC = () => { //defines userprofile component
     const apiService = useApi();
     const {id} = useParams(); // stores the id
     const [user, setUser] = useState<User | null>(null); // stores the fetched data of user
+    const [ownProfile, setOwnProfile] = useState<boolean>(false); // stores  if it's the user's own profile
 
     const {
         value: token,
@@ -39,6 +40,10 @@ const UserProfile: React.FC = () => { //defines userprofile component
                 });
                 console.log(user);
                 setUser(user); //state change of state variable so React knows
+                const loggedinUser : User = await apiService.get<User>('/me', { // get request to find logged in user
+                    "Authorization": `Bearer ${token}` ,
+                });
+                setOwnProfile((loggedinUser.id == user.id));
                 console.log("Fetched user:", user);
             } catch (error) {
                 if (error instanceof Error) {
@@ -65,10 +70,12 @@ const UserProfile: React.FC = () => { //defines userprofile component
                         <p><strong>Status:</strong> {user.status}</p>
                         <p><strong>Birthday:</strong> {user.birthday}</p>
                         <p><strong>Creation Date:</strong> {user.creationDate}</p>
+                        { ownProfile && ( // renders if own profile
                         <Button
-                        >
+                            onClick = {() => router.push(`/users/${id}/edit`)}>
                             Edit
                         </Button>
+                        )}
                         <Button
                             onClick = {() => router.push("/users/dashboard")}>
                             Dashboard
