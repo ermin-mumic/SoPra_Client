@@ -71,7 +71,7 @@ const Login: React.FC = () => { // defines a React component Login that returns 
           label="Password"
           rules={[{ required: true, message: "Please input your password!" }]}
         >
-          <Input placeholder="Enter password" />
+          <Input.Password placeholder="Enter password" />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" className="login-button">
@@ -82,12 +82,6 @@ const Login: React.FC = () => { // defines a React component Login that returns 
           <Button
               onClick = {() => router.push("/register")}>
             Register
-          </Button>
-        </Form.Item>
-        <Form.Item>
-          <Button
-              onClick = {() => router.push("/")}>
-            Landing Page
           </Button>
         </Form.Item>
       </Form>

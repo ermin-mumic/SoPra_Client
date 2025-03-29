@@ -110,7 +110,7 @@ const Register: React.FC = () => { // defines a React component Register that re
                     label="Password"
                     rules={[{ required: true, message: "Please input your password!" }]}
                 >
-                    <Input placeholder="Enter password" />
+                    <Input.Password placeholder="Enter password" />
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="register-button">
@@ -121,12 +121,6 @@ const Register: React.FC = () => { // defines a React component Register that re
                     <Button
                         onClick = {() => router.push("/login")}>
                         Login
-                    </Button>
-                </Form.Item>
-                <Form.Item>
-                    <Button
-                        onClick = {() => router.push("/")}>
-                        Landing Page
                     </Button>
                 </Form.Item>
             </Form>
